@@ -4,7 +4,7 @@
     with_items:
       - python
       - python-dev
-      - python-cryptography
+      - python-virtualenv
       - gcc
       - dialog
       - libaugeas0
@@ -19,10 +19,10 @@
     notify:
       - Install letsencrypt
 
-  - name: Flush handlers
-    meta: flush_handlers
+  - name: Install letsencrypt
+    pip: chdir="{{ letsencrypt_install_directory }}" virtualenv="{{ ansible_install_directory }}" virtualenv_site_packages=no requirements=requirements.txt
 
   - name: Get the certificate
-    command: letsencrypt --agree-eula --agree-tos --text --domains {{ letsencrypt_cert_domain }} --email {{ letsencrypt_email }} -a standalone auth
+    command: "{{ letsencrypt_install_directory }}/bin/letsencrypt {% if letsencrypt_agree_eula %}--agree-eula{% endif %} {% if letsencrypt_agree_tos %}--agree-tos{% endif %} --text --domains {{ letsencrypt_cert_domain }} {% if letsencrypt_email is defined %}--email {{ letsencrypt_email }} {% endif %}-a standalone auth"
     args:
       creates: "/etc/letsencrypt/live/{{ letsencrypt_cert_domain }}"
