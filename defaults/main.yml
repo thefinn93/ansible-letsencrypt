@@ -1,0 +1,4 @@
+---
+  letsencrypt_install_directory: /usr/local/src
+  letsencrypt_cert_domain: "{{ ansible_fqdn }}"
+  letsencrypt_email: "changeme@{{ ansible_domain }}"

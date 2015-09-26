@@ -1,0 +1,28 @@
+---
+  - name: Install depends
+    apt: name={{ item }} state=installed
+    with_items:
+      - python
+      - python-dev
+      - python-cryptography
+      - gcc
+      - dialog
+      - libaugeas0
+      - libssl-dev
+      - libffi-dev
+      - ca-certificates
+      - python-pip
+      - git
+
+  - name: Clone the repo
+    git: repo=https://github.com/letsencrypt/letsencrypt dest={{ letsencrypt_install_directory }}
+    notify:
+      - Install letsencrypt
+
+  - name: Flush handlers
+    meta: flush_handlers
+
+  - name: Get the certificate
+    command: letsencrypt --agree-eula --agree-tos --text --domains {{ letsencrypt_cert_domain }} --email {{ letsencrypt_email }} -a standalone auth
+    args:
+      creates: "/etc/letsencrypt/live/{{ letsencrypt_cert_domain }}"
