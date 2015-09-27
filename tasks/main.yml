@@ -20,7 +20,7 @@
       - Install letsencrypt
 
   - name: Install letsencrypt
-    pip: chdir="{{ letsencrypt_install_directory }}" virtualenv="{{ ansible_install_directory }}" virtualenv_site_packages=no requirements=requirements.txt
+    pip: chdir="{{ letsencrypt_install_directory }}" virtualenv="{{ letsencrypt_install_directory }}" virtualenv_site_packages=no requirements=requirements.txt
 
   - name: Get the certificate
     command: "{{ letsencrypt_install_directory }}/bin/letsencrypt {% if letsencrypt_agree_eula %}--agree-eula{% endif %} {% if letsencrypt_agree_tos %}--agree-tos{% endif %} --text --domains {{ letsencrypt_cert_domain }} {% if letsencrypt_email is defined %}--email {{ letsencrypt_email }} {% endif %}-a standalone auth"
