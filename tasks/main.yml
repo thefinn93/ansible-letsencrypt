@@ -16,8 +16,6 @@
 
   - name: Clone the repo
     git: repo=https://github.com/letsencrypt/letsencrypt dest={{ letsencrypt_install_directory }}
-    notify:
-      - Install letsencrypt
 
   - name: Install letsencrypt
     pip: chdir="{{ letsencrypt_install_directory }}" virtualenv="{{ letsencrypt_install_directory }}" virtualenv_site_packages=no requirements=requirements.txt

@@ -1,5 +1,0 @@
----
-  - name: Install letsencrypt
-    command: pip install -r requirements.txt acme/ . letsencrypt-apache/ letsencrypt-nginx/
-    args:
-      chdir: "{{ letsencrypt_install_directory }}"
