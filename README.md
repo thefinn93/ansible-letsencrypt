@@ -1,5 +1,6 @@
 # ansible-letsencrypt
-An ansible role to generate TLS certificates and get them signed by LetsEncrypt's CA
+An ansible role to generate TLS certificates and get them signed by LetsEncrypt's CA. This has been
+tested on Debian Jessie. If you successfully run it on other systems, please let me know.
 
 # Usage
 First, read LetsEncrypt's TOS and EULA. Only proceed if you agree to them.
