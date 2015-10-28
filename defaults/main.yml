@@ -1,5 +1,6 @@
 ---
-  letsencrypt_install_directory: /usr/local/src/letsencrypt
+  letsencrypt_src_directory: /usr/local/src/letsencrypt
+  letsencrypt_venv: "{{ letsencrypt_src_directory }}/env"
   letsencrypt_cert_domain: "{{ ansible_fqdn }}"
   letsencrypt_agree_tos: false
-  letsencrypt_agree_eula: false
+  letsencrypt_email: "webmaster@{{ ansible_domain }}"

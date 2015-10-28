@@ -15,12 +15,16 @@
       - git
 
   - name: Clone the repo
-    git: repo=https://github.com/letsencrypt/letsencrypt dest={{ letsencrypt_install_directory }}
+    git: repo=https://github.com/letsencrypt/letsencrypt dest={{ letsencrypt_src_directory }}
 
   - name: Install letsencrypt
-    pip: chdir="{{ letsencrypt_install_directory }}" virtualenv="{{ letsencrypt_install_directory }}" virtualenv_site_packages=no requirements=requirements.txt
+    pip: chdir="{{ letsencrypt_src_directory }}" virtualenv="{{ letsencrypt_venv }}" virtualenv_site_packages=no name={{ item }} state=latest
+    with_items:
+      - letsencrypt
+      - letsencrypt-apache
+      - letsencrypt-nginx
 
   - name: Get the certificate
-    command: "{{ letsencrypt_install_directory }}/bin/letsencrypt {% if letsencrypt_agree_eula %}--agree-eula{% endif %} {% if letsencrypt_agree_tos %}--agree-tos{% endif %} --text --domains {{ letsencrypt_cert_domain }} {% if letsencrypt_email is defined %}--email {{ letsencrypt_email }} {% endif %}-a standalone auth"
+    command: "{{ letsencrypt_venv}}/bin/python {{ letsencrypt_venv }}/bin/letsencrypt --agree-dev-preview {% if letsencrypt_agree_tos %}--agree-tos{% endif %} --text --domains {{ letsencrypt_cert_domain }} --email {{ letsencrypt_email }} -a standalone auth"
     args:
       creates: "/etc/letsencrypt/live/{{ letsencrypt_cert_domain }}"
