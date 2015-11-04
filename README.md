@@ -14,6 +14,9 @@ The following variables are available:
 
 `letsencrypt_install_directory` should probably be left alone, but if you set it, it will change where the letsencrypt program is installed.
 
+`letsencrypt_server` sets the auth server. If you're in the early beta you will have received the URL of this server,
+set it here
+
 # Example Playbook
 ```
 ---
@@ -24,4 +27,5 @@ The following variables are available:
        letsencrypt_agree_tos: yes
        letsencrypt_agree_eula: yes
        letsencrypt_email: user@example.net
+       letencrypt_server: https://acme-v01.api.letsencrypt.org/directory  # Only works if your domain is whitelisted
 ```

@@ -25,6 +25,6 @@
       - letsencrypt-nginx
 
   - name: Get the certificate
-    command: "{{ letsencrypt_venv}}/bin/python {{ letsencrypt_venv }}/bin/letsencrypt --agree-dev-preview {% if letsencrypt_agree_tos %}--agree-tos{% endif %} --text --domains {{ letsencrypt_cert_domain }} --email {{ letsencrypt_email }} -a standalone auth"
+    command: "{{ letsencrypt_venv}}/bin/python {{ letsencrypt_venv }}/bin/letsencrypt --agree-dev-preview {% if letsencrypt_agree_tos %}--agree-tos{% endif %} --text --domains {{ letsencrypt_cert_domain }} --email {{ letsencrypt_email }} -a standalone {% if letsencrypt_server is defined %}--server {{ letsencrypt_server }}{% endif %} auth"
     args:
       creates: "/etc/letsencrypt/live/{{ letsencrypt_cert_domain }}"
