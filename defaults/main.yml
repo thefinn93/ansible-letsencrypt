@@ -1,8 +1,9 @@
 ---
   letsencrypt_src_directory: /usr/local/share/letsencrypt
   letsencrypt_venv: "{{ letsencrypt_src_directory }}/env"
-  letsencrypt_cert_domain: "{{ ansible_fqdn }}"
+  letsencrypt_cert_domain:
+    - "{{ ansible_fqdn }}"
   letsencrypt_webroot_path: /var/www
   letsencrypt_authenticator: webroot
   letsencrypt_email: "webmaster@{{ ansible_domain }}"
-  letsencrypt_command: "{{ letsencrypt_venv }}/bin/letsencrypt --agree-dev-preview --agree-tos --text --domains {{ letsencrypt_cert_domain }} --email {{ letsencrypt_email }} {% if letsencrypt_server is defined %}--server {{ letsencrypt_server }}{% endif %}"
+  letsencrypt_command: "{{ letsencrypt_venv }}/bin/letsencrypt --agree-dev-preview --agree-tos --text {% for domain in letsencrypt_cert_domain %}-d {{ domain }}{% endfor %} --email {{ letsencrypt_email }} {% if letsencrypt_server is defined %}--server {{ letsencrypt_server }}{% endif %}"

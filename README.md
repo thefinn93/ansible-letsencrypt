@@ -17,7 +17,7 @@ The following variables are available:
 
 `letsencrypt_email` needs to be set to your email address. Let's Encrypt wants it. Defaults to `webmaster@{{ ansible_fqdn }}`.
 
-`letsencrypt_cert_domain` should be set to your domain. It defaults to the value of `ansible_fqdn`.
+`letsencrypt_cert_domains` is a list of domains you wish to get a certificate for. It defaults to a single item with the value of `{{ ansible_fqdn }}`.
 
 `letsencrypt_install_directory` should probably be left alone, but if you set it, it will change where the letsencrypt program is installed.
 
@@ -35,4 +35,7 @@ set it here.
        letsencrypt_webroot_path: /var/www/html
        letsencrypt_email: user@example.net
        letencrypt_server: https://acme-v01.api.letsencrypt.org/directory  # Only works if your domain is whitelisted
+       letsencrypt_cert_domains:
+        - www.example.net
+        - example.net
 ```
