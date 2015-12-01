@@ -5,7 +5,7 @@ Currently attempts first to use the `webroot` authenticator, then if that fails 
 it will use the standalone authenticator. This is handy for generating certs on a fresh machine before
 the web server has been configured or even installed.
 
-I've tested this on a couple of Debian Jessie boxes, if you test it on other things please let me know
+I've tested this on a couple of Debian Jessie boxes with nginx, if you test it on other things please let me know
 the results (positive or otherwise) so I can document them here/fix the issue.
 
 # Usage
@@ -21,9 +21,10 @@ The following variables are available:
 
 `letsencrypt_install_directory` should probably be left alone, but if you set it, it will change where the letsencrypt program is installed.
 
-`letsencrypt_server` sets the auth server. If you're in the early beta you will have received the URL of a server,
+`letsencrypt_server` sets the auth server. If you're in the private beta you will have received the URL of a server,
 set it here.
 
+The [Let's Encrypt client](https://github.com/letsencrypt/letsencrypt) will put the certificate and accessories in `/etc/letsencrypt/live/<first listed domain>/`. For more info, see the [Let's Encrypt documentation](https://letsencrypt.readthedocs.org/en/latest/using.html#where-are-my-certificates).
 
 # Example Playbook
 ```
