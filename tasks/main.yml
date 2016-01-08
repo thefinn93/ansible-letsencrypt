@@ -5,6 +5,7 @@
       - python
       - python-dev
       - python-virtualenv
+      - virtualenv
       - gcc
       - dialog
       - libaugeas0
