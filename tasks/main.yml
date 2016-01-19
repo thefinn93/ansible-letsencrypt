@@ -15,6 +15,12 @@
       - python-pip
       - git
 
+  - name: Install depends
+    apt: name={{ item }} state=installed
+    with_items:
+      - virtualenv
+    when: ansible_distribution == 'Debian'
+
   - name: Install python depends
     pip: virtualenv="{{ letsencrypt_venv }}" virtualenv_site_packages=no name={{ item }} state=latest
     with_items:
@@ -27,14 +33,16 @@
       - git+https://github.com/kuba/ConfigArgParse.git@python2.6-0.9.3#egg=ConfigArgParse
       - letsencrypt
 
+
   - name: Attempt to get the certificate using the webroot authenticator
-    command: "{{ letsencrypt_command }} -a webroot --webroot-path {{ letsencrypt_webroot_path }} certonly"
+    command: "{{ letsencrypt_command }} -a webroot -d {{letsencrypt_cert_domains | join(' -d ')}} --webroot-path {{ letsencrypt_webroot_path }} certonly"
     args:
-      creates: "/etc/letsencrypt/live/{{ letsencrypt_cert_domains[0] }}"
-    when: letsencrypt_authenticator == "webroot"
+      creates: "/etc/letsencrypt/live/{{letsencrypt_cert_domains[0]}}"
+    when: letsencrypt_webroot_path is defined
     ignore_errors: True
 
   - name: Attempt to get the certificate using the standalone authenticator (in case eg the webserver isn't running yet)
-    command: "{{ letsencrypt_command }} -a standalone auth"
+    command: "{{ letsencrypt_command }} -d {{letsencrypt_cert_domains | join(' -d ')}} -a standalone auth"
     args:
-      creates: "/etc/letsencrypt/live/{{ letsencrypt_cert_domains[0] }}"
+      creates: "/etc/letsencrypt/live/{{letsencrypt_cert_domains[0]}}"
+    when: letsencrypt_webroot_path is not defined
