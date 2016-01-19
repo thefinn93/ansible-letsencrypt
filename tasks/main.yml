@@ -1,11 +1,12 @@
 ---
+  - apt: update_cache=yes cache_valid_time=3600
+
   - name: Install depends
-    apt: name={{ item }} state=installed
+    apt: name={{ item }} state=present
     with_items:
       - python
       - python-dev
       - python-virtualenv
-      - virtualenv
       - gcc
       - dialog
       - libaugeas0
@@ -14,6 +15,12 @@
       - ca-certificates
       - python-pip
       - git
+
+  - name: Install virtualenv (Debian)
+    apt: name={{ item }} state=present
+    with_items:
+      - virtualenv
+    when: ansible_distribution == 'Debian'
 
   - name: Install python depends
     pip: virtualenv="{{ letsencrypt_venv }}" virtualenv_site_packages=no name={{ item }} state=latest
