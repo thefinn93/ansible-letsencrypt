@@ -7,12 +7,15 @@ galaxy_info:
   min_ansible_version: 1.2
 
   platforms:
-  - name: Debian
-    versions:
-    - jessie
+    - name: Ubuntu
+      versions:
+        - trusty
+    - name: Debian
+      versions:
+        - jessie
 
   categories:
-  - networking
-  - web
+    - networking
+    - web
 
 dependencies: []
