@@ -21,8 +21,7 @@ The following variables are available:
 
 `letsencrypt_install_directory` should probably be left alone, but if you set it, it will change where the letsencrypt program is installed.
 
-`letsencrypt_server` sets the auth server. If you're in the private beta you will have received the URL of a server,
-set it here.
+`letsencrypt_server` sets the auth server. Set to `https://acme-staging.api.letsencrypt.org/directory` to use the staging server (far higher rate limits, but certs are not trusted, intended for testing)
 
 The [Let's Encrypt client](https://github.com/letsencrypt/letsencrypt) will put the certificate and accessories in `/etc/letsencrypt/live/<first listed domain>/`. For more info, see the [Let's Encrypt documentation](https://letsencrypt.readthedocs.org/en/latest/using.html#where-are-my-certificates).
 
@@ -35,7 +34,6 @@ The [Let's Encrypt client](https://github.com/letsencrypt/letsencrypt) will put 
      - role: letsencrypt
        letsencrypt_webroot_path: /var/www/html
        letsencrypt_email: user@example.net
-       letencrypt_server: https://acme-v01.api.letsencrypt.org/directory  # Only works if your domain is whitelisted
        letsencrypt_cert_domains:
         - www.example.net
         - example.net
