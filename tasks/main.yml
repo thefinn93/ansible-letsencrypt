@@ -46,5 +46,22 @@
     args:
       creates: "/etc/letsencrypt/live/{{ letsencrypt_cert_domains[0] }}"
 
+  - name: Fix the renewal file
+    ini_file: section={{ item.section |default("renewalparams") }} option={{ item.option }} value={{ item.value }} dest="/etc/letsencrypt/renewal/{{ letsencrypt_cert_domains[0] }}.conf"
+    with_items:
+      - option: os_packages_only
+        value: False
+      - option: verb
+        value: certonly
+      - option: noninteractive_mode
+        value: False
+      - option: uir
+        value: False
+      - option: hsts
+        value: False
+      - section: "[webroot_map]"
+        option: "{{ letsencrypt_cert_domains[0] }}"
+        value: "{{ letsencrypt_webroot_path }}"
+
   - name: Install renewal cron
-    cron: name="Let's Encrypt Renewal" day="{{ letsencrypt_renewal_frequency.day }} hour="{{ letsencrypt_renewal_frequency.hour }}" minute="{{ letsencrypt_renewal_frequency.minute }}" job="{{ letsencrypt_venv }}/bin/letsencrypt-renewer }} > /dev/null"
+    cron: name="Let's Encrypt Renewal" day="{{ letsencrypt_renewal_frequency.day }}" hour="{{ letsencrypt_renewal_frequency.hour }}" minute="{{ letsencrypt_renewal_frequency.minute }}" job="{{ letsencrypt_venv }}/bin/letsencrypt-renewer > /dev/null"
