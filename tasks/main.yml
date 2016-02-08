@@ -47,7 +47,7 @@
       creates: "/etc/letsencrypt/live/{{ letsencrypt_cert_domains[0] }}"
 
   - name: Fix the renewal file
-    ini_file: section=renewalparam option={{ item.key }} value={{ item.value }} dest="/etc/letsencrypt/renewal/{{ letsencrypt_cert_domains[0] }}.conf"
+    ini_file: section=renewalparams option={{ item.key }} value={{ item.value }} dest="/etc/letsencrypt/renewal/{{ letsencrypt_cert_domains[0] }}.conf"
     with_dict:
       os_packages_only: False
       verb: certonly
