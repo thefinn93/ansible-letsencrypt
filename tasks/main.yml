@@ -49,11 +49,11 @@
   - name: Fix the renewal file
     ini_file: section=renewalparam option={{ item.key }} value={{ item.value }} dest="/etc/letsencrypt/renewal/{{ letsencrypt_cert_domains[0] }}.conf"
     with_dict:
-      - os_packages_only: False
-      - verb: certonly
-      - noninteractive_mode: False
-      - uir: False
-      - hsts: False
+      os_packages_only: False
+      verb: certonly
+      noninteractive_mode: False
+      uir: False
+      hsts: False
 
   - name: Fix the webroot map in the renewal file
     ini_file: section="[webroot_map]" option={{ item }} value={{ letsencrypt_webroot_path }} dest="/etc/letsencrypt/renewal/{{ letsencrypt_cert_domains[0] }}.conf"
