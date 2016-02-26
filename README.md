@@ -23,6 +23,10 @@ The following variables are available:
 
 `letsencrypt_server` sets the auth server. Set to `https://acme-staging.api.letsencrypt.org/directory` to use the staging server (far higher rate limits, but certs are not trusted, intended for testing)
 
+`letsencrypt_authenticator` is for which authenticator to use. Defaults to `webroot`, which will start by using the `webroot` authenticator and run the `standalone` if that fails. 
+
+`letsencrypt_parallel_web_server` is the name of the web service that you'd like to stop before attempting the `standalone` authenticator and then start afterwards. eg. `nginx` or `apache2`. This allows use of the standalone letsencrypt authenticator, but in an environment where a web server is running on the required port. This could be in a scenario where a web app is being proxied on the root url, so there is no traditional web root path. Default unset. Set `letsencrypt_authenicator` to `standalone` if you want to use this variable.  
+
 The [Let's Encrypt client](https://github.com/letsencrypt/letsencrypt) will put the certificate and accessories in `/etc/letsencrypt/live/<first listed domain>/`. For more info, see the [Let's Encrypt documentation](https://letsencrypt.readthedocs.org/en/latest/using.html#where-are-my-certificates).
 
 # Example Playbook
