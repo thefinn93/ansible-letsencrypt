@@ -56,7 +56,7 @@
       hsts: False
 
   - name: Fix the webroot map in the renewal file
-    ini_file: section="[webroot_map]" option={{ item }} value={{ letsencrypt_webroot_path }} dest="/etc/letsencrypt/renewal/{{ letsencrypt_cert_domains[0] }}.conf"
+    ini_file: section="webroot_map" option={{ item }} value={{ letsencrypt_webroot_path }} dest="/etc/letsencrypt/renewal/{{ letsencrypt_cert_domains[0] }}.conf"
     with_items: "{{ letsencrypt_cert_domains }}"
 
   - name: Install renewal cron
