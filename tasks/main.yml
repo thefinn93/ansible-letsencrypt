@@ -19,8 +19,14 @@
   - name: Install virtualenv (Debian)
     apt: name={{ item }} state=present
     with_items:
-      - virtualenv
-    when: ansible_distribution == 'Debian'
+      - python-virtualenv
+    when: ansible_distribution == 'Debian' and ansible_lsb.codename !=  "wheezy"
+
+  - name: Install virtualenv (Debian Wheezy)
+    apt: name={{ item }} state=present
+    with_items:
+      - python-virtualenv
+    when: ansible_distribution == 'Debian' and ansible_lsb.codename ==  "wheezy"
 
   - name: Install python depends
     pip: virtualenv="{{ letsencrypt_venv }}" virtualenv_site_packages=no name={{ item }} state=latest
