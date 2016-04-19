@@ -38,7 +38,7 @@
     pip: virtualenv="{{ letsencrypt_venv }}" virtualenv_site_packages=no name=letsencrypt state=latest
 
   - name: Ensure webroot exists
-    file: path="{{ letsencrypt_webroot_path }}" state=directory recurse=yes mode="a+rw"
+    file: path="{{ letsencrypt_webroot_path }}" state=directory
 
   - name: Attempt to get the certificate using the webroot authenticator
     command: "{{ letsencrypt_command }} -a webroot --webroot-path {{ letsencrypt_webroot_path }} certonly"
