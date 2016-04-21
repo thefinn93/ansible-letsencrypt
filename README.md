@@ -25,6 +25,8 @@ The following variables are available:
 
 `letsencrypt_server` sets the auth server. Set to `https://acme-staging.api.letsencrypt.org/directory` to use the staging server (far higher rate limits, but certs are not trusted, intended for testing)
 
+`letsencrypt_renewal_command_args` add arguments to the `letsencrypt renewal` command that gets run using cron.  For example, use the renewal hooks to restart a web server.
+
 The [Let's Encrypt client](https://github.com/letsencrypt/letsencrypt) will put the certificate and accessories in `/etc/letsencrypt/live/<first listed domain>/`. For more info, see the [Let's Encrypt documentation](https://letsencrypt.readthedocs.org/en/latest/using.html#where-are-my-certificates).
 
 # Example Playbook
@@ -39,4 +41,5 @@ The [Let's Encrypt client](https://github.com/letsencrypt/letsencrypt) will put 
        letsencrypt_cert_domains:
         - www.example.net
         - example.net
+       letsencrypt_renewal_command_args: '--renew-hook "systemctl restart nginx"'
 ```
