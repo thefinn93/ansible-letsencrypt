@@ -19,8 +19,6 @@ The following variables are available:
 
 `letsencrypt_email` needs to be set to your email address. Let's Encrypt wants it. Defaults to `webmaster@{{ ansible_fqdn }}`.
 
-`letsencrypt_rsa_key_size` allows to specify a size for the generated key.
-
 `letsencrypt_cert_domains` is a list of domains you wish to get a certificate for. It defaults to a single item with the value of `{{ ansible_fqdn }}`.
 
 `letsencrypt_install_directory` should probably be left alone, but if you set it, it will change where the letsencrypt program is installed.
