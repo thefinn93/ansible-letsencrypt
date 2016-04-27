@@ -14,7 +14,7 @@ galaxy_info:
       versions:
         - jessie
 
-  categories:
+  galaxy_tags:
     - networking
     - web
 
