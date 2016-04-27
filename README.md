@@ -8,6 +8,8 @@ the web server has been configured or even installed.
 I've tested this on a couple of Debian Jessie boxes with nginx, if you test it on other things please let me know
 the results (positive or otherwise) so I can document them here/fix the issue.
 
+Requires Ansible >= 2.0
+
 # Usage
 First, read Let's Encrypt's TOS and EULA. Only proceed if you agree to them.
 
