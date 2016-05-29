@@ -23,7 +23,7 @@
     become: yes
     with_items:
       - virtualenv
-    when: ansible_distribution == 'Debian' and ansible_lsb.codename !=  "wheezy"
+    when: ansible_os_family == 'Debian' and ansible_lsb.codename !=  'wheezy'
 
   - name: Install virtualenv (Debian Wheezy)
     apt: name={{ item }} state=present
