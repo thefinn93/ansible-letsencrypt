@@ -23,14 +23,14 @@
     become: yes
     with_items:
       - virtualenv
-    when: ansible_os_family == 'Debian' and ansible_lsb.codename !=  'wheezy'
+    when: ansible_os_family == 'Debian' and ansible_lsb.codename !=  'wheezy' and ansible_distribution_release !=  'trusty'
 
   - name: Install virtualenv (Debian Wheezy)
     apt: name={{ item }} state=present
     become: yes
     with_items:
       - python-virtualenv
-    when: ansible_distribution == 'Debian' and ansible_lsb.codename ==  "wheezy"
+    when: ansible_os_family == 'Debian' and (ansible_lsb.codename ==  "wheezy" or ansible_distribution_release !=  'trusty')
 
   - name: Install python depends
     pip: virtualenv="{{ letsencrypt_venv }}" virtualenv_site_packages=no name={{ item }} state=latest virtualenv_python=python2
