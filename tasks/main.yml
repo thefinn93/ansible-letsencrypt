@@ -30,7 +30,7 @@
     package: name={{ item }} state=present
     become: yes
     with_items:
-      - {{ virtualenv_package_name }}
+      - "{{ virtualenv_package_name }}"
 
   - name: Install python depends
     pip: virtualenv="{{ letsencrypt_venv }}" virtualenv_site_packages=no name={{ item }} state=latest virtualenv_python=python2
