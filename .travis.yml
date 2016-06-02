@@ -22,4 +22,4 @@ script:
   - ansible-lint tests/test.yml
 
   # Run the role/playbook with ansible-playbook.
-  - "ansible-playbook -i tests/inventory tests/test.yml --connection=local --sudo"
+  - "ansible-playbook -i tests/inventory tests/test.yml --connection=local --sudo --tags install"
