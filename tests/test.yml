@@ -2,5 +2,12 @@
 
 - hosts: localhost
   remote_user: root
+
+  vars:
+    letsencrypt_email: admin@example.com
+    letsencrypt_cert_domains:
+      - www.example.com
+    letsencrypt_server: https://acme-staging.api.letsencrypt.org/directory
+
   roles:
     - ansible-letsencrypt
