@@ -7,6 +7,7 @@
     letsencrypt_email: admin@example.com
     letsencrypt_cert_domains:
       - www.example.com
+      - example.com
     letsencrypt_server: https://acme-staging.api.letsencrypt.org/directory
 
   roles:
