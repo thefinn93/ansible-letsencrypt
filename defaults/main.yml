@@ -6,7 +6,7 @@
   letsencrypt_webroot_path: /var/www
   letsencrypt_authenticator: webroot
   letsencrypt_email: "webmaster@{{ ansible_domain }}"
-  letsencrypt_command: "{{ letsencrypt_venv }}/bin/letsencrypt --agree-tos  {% if letsencrypt_rsa_key_size is defined %}--rsa-key-size {{ letsencrypt_rsa_key_size }}{% endif %} --text {% for domain in letsencrypt_cert_domains %}-d {{ domain }} {% endfor %}--email {{ letsencrypt_email }} {% if letsencrypt_server is defined %}--server {{ letsencrypt_server }}{% endif %} --expand"
+  letsencrypt_command: "{{ letsencrypt_venv }}/bin/letsencrypt --agree-tos  {% if letsencrypt_rsa_key_size is defined %}--rsa-key-size {{ letsencrypt_rsa_key_size }}{% endif %} --text --email {{ letsencrypt_email }} {% if letsencrypt_server is defined %}--server {{ letsencrypt_server }}{% endif %} --expand"
   letsencrypt_renewal_frequency:
     day: "*"
     hour: 0
