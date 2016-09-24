@@ -62,7 +62,7 @@
     ignore_errors: True
 
   - name: Attempt to get the certificate using the standalone authenticator (in case eg the webserver isn't running yet)
-    command: "{{ letsencrypt_command }} -a standalone auth"
+    command: "{{ letsencrypt_command }} -a standalone auth {{ letsencrypt_standalone_command_args }}"
     become: yes
     args:
       creates: "/etc/letsencrypt/live/{{ letsencrypt_cert_domains[0] }}"

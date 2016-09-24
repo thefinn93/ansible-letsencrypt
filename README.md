@@ -29,6 +29,8 @@ The following variables are available:
 
 `letsencrypt_renewal_command_args` add arguments to the `letsencrypt renewal` command that gets run using cron.  For example, use the renewal hooks to restart a web server.
 
+`letsencrypt_standalone_command_args` adds arguments to the standalone authentication method. This is mostly useful for specifying supported challenges, such as `--standalone-supported-challenges tls-sni-01` to limit the authentication to port 443 if something is already running on 80 or vice versa.
+
 The [Let's Encrypt client](https://github.com/letsencrypt/letsencrypt) will put the certificate and accessories in `/etc/letsencrypt/live/<first listed domain>/`. For more info, see the [Let's Encrypt documentation](https://letsencrypt.readthedocs.org/en/latest/using.html#where-are-my-certificates).
 
 # Example Playbook
