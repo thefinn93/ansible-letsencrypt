@@ -12,3 +12,4 @@
     hour: 0
     minute: 0
   letsencrypt_renewal_command_args: ''
+  letsencrypt_standalone_command_args: ''
