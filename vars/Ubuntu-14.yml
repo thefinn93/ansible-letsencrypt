@@ -1,3 +1,16 @@
 --- # Ubuntu Trusty
 
 virtualenv_package_name: python-virtualenv
+
+install_packages:
+  - python
+  - python-dev
+  - python-virtualenv
+  - gcc
+  - dialog
+  - libaugeas0
+  - libssl-dev
+  - libffi-dev
+  - ca-certificates
+  - python-pip
+  - git

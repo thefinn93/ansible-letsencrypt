@@ -2,23 +2,7 @@
   - apt: update_cache=yes cache_valid_time=3600
     become: yes
     tags: install
-
-  - name: Install depends
-    package: name={{ item }} state=present
-    become: yes
-    with_items:
-      - python
-      - python-dev
-      - python-virtualenv
-      - gcc
-      - dialog
-      - libaugeas0
-      - libssl-dev
-      - libffi-dev
-      - ca-certificates
-      - python-pip
-      - git
-    tags: install
+    when: ansible_os_family == "Debian"
 
   - include_vars: "{{ item }}"
     with_first_found:
@@ -26,7 +10,12 @@
       - "../vars/{{ ansible_distribution }}.yml"
       - "../vars/{{ ansible_os_family }}.yml"
       - "../vars/default.yml"
-    when: virtualenv_package_name is not defined
+    tags: install
+
+  - name: Install depends
+    package: name={{ item }} state=present
+    become: yes
+    with_items: "{{ install_packages }}"
     tags: install
 
   - name: Install virtualenv
@@ -43,6 +32,13 @@
       - setuptools
       - pip
     tags: install
+
+  - name: Install pycparser
+    # https://community.letsencrypt.org/t/certbot-auto-fails-while-setting-up-virtual-environment-complains-about-package-hashes/20529/22
+    pip: virtualenv="{{ letsencrypt_venv }}" virtualenv_site_packages=no name=pycparser version=2.13 state=present virtualenv_python=python2
+    become: yes
+    tags: install
+    when: ansible_os_family == "RedHat"
 
   - name: More python depends
     pip: virtualenv="{{ letsencrypt_venv }}" virtualenv_site_packages=no name=letsencrypt state=latest

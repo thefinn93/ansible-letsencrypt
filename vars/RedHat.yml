@@ -1,16 +1,16 @@
---- # Debian wheezy
+---
 
 virtualenv_package_name: python-virtualenv
 
 install_packages:
   - python
-  - python-dev
+  - python-devel
   - python-virtualenv
   - gcc
   - dialog
-  - libaugeas0
-  - libssl-dev
-  - libffi-dev
+  - augeas-libs
+  - openssl-devel
+  - libffi-devel
   - ca-certificates
   - python-pip
   - git

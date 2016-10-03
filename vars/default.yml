@@ -1,3 +1,5 @@
 ---
 
 virtualenv_package_name: virtualenv
+
+install_packages: []
