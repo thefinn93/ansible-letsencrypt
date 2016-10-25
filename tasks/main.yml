@@ -8,17 +8,6 @@
     package: name={{ item }} state=present
     become: yes
     with_items: "{{ letsencrypt_depends }}"
-      - python
-      - python-dev
-      - python-virtualenv
-      - gcc
-      - dialog
-      - libaugeas0
-      - libssl-dev
-      - libffi-dev
-      - ca-certificates
-      - python-pip
-      - git
     tags: install
 
   - include_vars: "{{ item }}"
