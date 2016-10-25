@@ -1,7 +1,7 @@
 ---
   - apt: update_cache=yes cache_valid_time=3600
     become: yes
-    when: ansible_pkg_mgr: "apt"
+    when: ansible_pkg_mgr == "apt"
     tags: install
 
   - name: Install depends
