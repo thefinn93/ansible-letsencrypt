@@ -6,9 +6,11 @@ letsencrypt_depends:
       - python-virtualenv
       - gcc
       - dialog
-      - libaugeas0
-      - libssl-dev
-      - libffi-dev
+      - augeas-libs
+      - openssl-devel
+      - openssl-libs
+      - libffi
+      - libffi-devel
       - ca-certificates
       - python-pip
       - git

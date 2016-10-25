@@ -3,7 +3,7 @@
 virtualenv_package_name: virtualenv
 letsencrypt_depends:
       - python
-      - python-devel
+      - python-dev
       - python-virtualenv
       - gcc
       - dialog
