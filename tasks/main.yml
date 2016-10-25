@@ -4,12 +4,6 @@
     when: ansible_pkg_mgr == "apt"
     tags: install
 
-  - name: Install depends
-    package: name={{ item }} state=present
-    become: yes
-    with_items: "{{ letsencrypt_depends }}"
-    tags: install
-
   - include_vars: "{{ item }}"
     with_first_found:
       - "../vars/{{ ansible_distribution }}-{{ ansible_distribution_major_version | int }}.yml"
@@ -17,6 +11,12 @@
       - "../vars/{{ ansible_os_family }}.yml"
       - "../vars/default.yml"
     when: virtualenv_package_name is not defined
+    tags: install
+
+  - name: Install depends
+    package: name={{ item }} state=present
+    become: yes
+    with_items: "{{ letsencrypt_depends }}"
     tags: install
 
   - name: Install virtualenv
