@@ -7,7 +7,7 @@
   - name: Install depends
     package: name={{ item }} state=present
     become: yes
-    with_items:
+    with_items: "{{ letsencrypt_depends }}"
       - python
       - python-dev
       - python-virtualenv
