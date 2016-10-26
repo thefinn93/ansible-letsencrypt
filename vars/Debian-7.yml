@@ -1,3 +1,16 @@
 --- # Debian wheezy
 
 virtualenv_package_name: python-virtualenv
+
+letsencrypt_depends:
+      - python
+      - python-dev
+      - python-virtualenv
+      - gcc
+      - dialog
+      - libaugeas0
+      - libssl-dev
+      - libffi-dev
+      - ca-certificates
+      - python-pip
+      - git

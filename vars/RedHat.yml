@@ -1,0 +1,18 @@
+---
+
+letsencrypt_depends:
+      - python
+      - python-devel
+      - python-virtualenv
+      - gcc
+      - dialog
+      - augeas-libs
+      - openssl-devel
+      - openssl-libs
+      - libffi
+      - libffi-devel
+      - ca-certificates
+      - python-pip
+      - git
+ 
+virtualenv_package_name: "python-virtualenv"

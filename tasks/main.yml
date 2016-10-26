@@ -1,23 +1,7 @@
 ---
   - apt: update_cache=yes cache_valid_time=3600
     become: yes
-    tags: install
-
-  - name: Install depends
-    package: name={{ item }} state=present
-    become: yes
-    with_items:
-      - python
-      - python-dev
-      - python-virtualenv
-      - gcc
-      - dialog
-      - libaugeas0
-      - libssl-dev
-      - libffi-dev
-      - ca-certificates
-      - python-pip
-      - git
+    when: ansible_pkg_mgr == "apt"
     tags: install
 
   - include_vars: "{{ item }}"
@@ -27,6 +11,12 @@
       - "../vars/{{ ansible_os_family }}.yml"
       - "../vars/default.yml"
     when: virtualenv_package_name is not defined
+    tags: install
+
+  - name: Install depends
+    package: name={{ item }} state=present
+    become: yes
+    with_items: "{{ letsencrypt_depends }}"
     tags: install
 
   - name: Install virtualenv
