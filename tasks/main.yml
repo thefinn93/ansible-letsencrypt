@@ -16,14 +16,14 @@
   - name: Install depends
     package: name={{ item }} state=present
     become: yes
-    with_items: "{{ letsencrypt_depends }}"
+    with_items: "{{ letsencrypt_depends | default([]) }}"
     tags: install
 
   - name: Install virtualenv
     package: name={{ item }} state=present
     become: yes
     with_items:
-      - "{{ virtualenv_package_name }}"
+      - "{{ virtualenv_package_name | default([]) }}"
     tags: install
 
   - name: Install python depends
