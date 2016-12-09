@@ -55,18 +55,20 @@
     become: yes
 
   - name: Attempt to get the certificate using the webroot authenticator
-    command: "{{ letsencrypt_command }} -a webroot --webroot-path {{ letsencrypt_webroot_path }} certonly"
+    command: "{{ letsencrypt_command }} -d {{ item }} -a webroot --webroot-path {{ letsencrypt_webroot_path }} certonly"
     become: yes
     args:
-      creates: "/etc/letsencrypt/live/{{ letsencrypt_cert_domains[0] }}"
+      creates: "/etc/letsencrypt/live/{{ item }}"
+    with_items: letsencrypt_cert_domains
     when: letsencrypt_authenticator == "webroot"
     ignore_errors: True
 
   - name: Attempt to get the certificate using the standalone authenticator (in case eg the webserver isn't running yet)
-    command: "{{ letsencrypt_command }} -a standalone auth {{ letsencrypt_standalone_command_args }}"
+    command: "{{ letsencrypt_command }} -d {{ item }} -a standalone auth {{ letsencrypt_standalone_command_args }}"
     become: yes
     args:
-      creates: "/etc/letsencrypt/live/{{ letsencrypt_cert_domains[0] }}"
+      creates: "/etc/letsencrypt/live/{{ item }}"
+    with_items: letsencrypt_cert_domains
 
   - name: Fix the renewal file
     ini_file:
