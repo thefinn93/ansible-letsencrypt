@@ -17,6 +17,9 @@ galaxy_info:
     - name: EL
       versions:
         - 7
+    - name: CentOS
+      versions:
+        - 7.2
 
   galaxy_tags:
     - networking
