@@ -107,3 +107,25 @@
       hour: "{{ letsencrypt_renewal_frequency.hour }}"
       minute: "{{ letsencrypt_renewal_frequency.minute }}"
       job: "{{ letsencrypt_venv }}/bin/letsencrypt renew --quiet {{ letsencrypt_renewal_command_args }}"
+
+  - name: Create directory for `ssl_certificate` and `ssl_certificate_key`
+    file:
+      path: '{{ item }}'
+      state: directory
+      recurse: yes
+    when: ssl_certificate and ssl_certificate_key
+    with_items:
+      - "{{ ssl_certificate|dirname }}"
+      - "{{ ssl_certificate_key|dirname }}"
+
+  - name: Symlink certificates to `ssl_certificate` and `ssl_certificate_key`
+    file:
+      src: '{{ item.src }}'
+      dest: '{{ item.dest }}'
+      state: link
+    when: ssl_certificate and ssl_certificate_key
+    with_items:
+      - src: /etc/letsencrypt/live/{{ letsencrypt_cert_domains[0] }}/fullchain.pem
+        dest: "{{ssl_certificate}}"
+      - src: /etc/letsencrypt/live/{{ letsencrypt_cert_domains[0] }}/privkey.pem
+        dest: "{{ssl_certificate_key}}"
