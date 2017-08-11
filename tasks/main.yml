@@ -78,7 +78,7 @@
       day: "{{ letsencrypt_renewal_frequency.day }}"
       hour: "{{ letsencrypt_renewal_frequency.hour }}"
       minute: "{{ letsencrypt_renewal_frequency.minute }}"
-      job: "{{ letsencrypt_venv }}/bin/letsencrypt renew --quiet {{ letsencrypt_renewal_command_args }}"
+      job: "{{letsencrypt_path}} renew --quiet {{ letsencrypt_renewal_command_args }}"
 
   - name: Create directory for `ssl_certificate` and `ssl_certificate_key`
     file:
