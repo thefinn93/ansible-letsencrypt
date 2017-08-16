@@ -13,14 +13,13 @@
     when: virtualenv_package_name is not defined
     tags: install
 
-  - name: check for Debian != jessie
-    fail:
-      msg: "Only the jessie release of Debian is supported at the moment"
-    when: ansible_distribution == "Debian" and ansible_distribution_release != "jessie"
-
   - name: install certbot (Debian jessie)
     include: debian-jessie.yml
     when: ansible_distribution == "Debian" and ansible_distribution_release == "jessie"
+
+  - name: install certbot (Debian stretch)
+    include: debian-stretch.yml
+    when: ansible_distribution == "Debian" and ansible_distribution_release == "stretch"
 
   - name: install certbot (using pip)
     include: notdebian.yml
