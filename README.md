@@ -17,7 +17,7 @@ The following variables are available:
 
 `letsencrypt_webroot_path` is the root path that gets served by your web server. Defaults to `/var/www`.
 
-`letsencrypt_email` needs to be set to your email address. Let's Encrypt wants it. Defaults to `webmaster@{{ ansible_fqdn }}`.
+`letsencrypt_email` needs to be set to your email address. Let's Encrypt wants it. Defaults to `webmaster@{{ ansible_fqdn }}`. If you _really_ want to register without providing an email address, define the variabe `letsencrypt_no_email`.
 
 `letsencrypt_rsa_key_size` allows to specify a size for the generated key.
 
