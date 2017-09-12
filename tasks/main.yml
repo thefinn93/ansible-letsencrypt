@@ -13,46 +13,17 @@
     when: virtualenv_package_name is not defined
     tags: install
 
-  - name: Install depends
-    package: name={{ item }} state=present
-    become: yes
-    with_items: "{{ letsencrypt_depends | default([]) }}"
-    tags: install
+  - name: install certbot (Debian jessie)
+    include: debian-jessie.yml
+    when: ansible_distribution == "Debian" and ansible_distribution_release == "jessie"
 
-  - name: Install virtualenv
-    package: name={{ item }} state=present
-    become: yes
-    with_items: "{{ virtualenv_package_name | default([]) }}"
-    tags: install
+  - name: install certbot (Debian stretch)
+    include: debian-stretch.yml
+    when: ansible_distribution == "Debian" and ansible_distribution_release == "stretch"
 
-  - name: Install python depends
-    pip:
-      virtualenv: "{{ letsencrypt_venv }}"
-      virtualenv_site_packages: no
-      name: "{{ item }}"
-      state: latest
-      virtualenv_python: python2
-    become: yes
-    with_items:
-      - setuptools
-      - pip
-    tags: install
-
-  - name: Install pycparser
-    # https://community.letsencrypt.org/t/certbot-auto-fails-while-setting-up-virtual-environment-complains-about-package-hashes/20529/22
-    pip: virtualenv="{{ letsencrypt_venv }}" virtualenv_site_packages=no name=pycparser version=2.13 state=present virtualenv_python=python2
-    become: yes
-    tags: install
-    when: ansible_os_family == "RedHat"
-
-  - name: More python depends
-    pip:
-      virtualenv: "{{ letsencrypt_venv }}"
-      virtualenv_site_packages: no
-      name: letsencrypt
-      state: latest
-    become: yes
-    tags: install
+  - name: install certbot (using pip)
+    include: notdebian.yml
+    when: ansible_distribution != "Debian"
 
   - name: Ensure webroot exists
     file:
@@ -106,7 +77,7 @@
       day: "{{ letsencrypt_renewal_frequency.day }}"
       hour: "{{ letsencrypt_renewal_frequency.hour }}"
       minute: "{{ letsencrypt_renewal_frequency.minute }}"
-      job: "{{ letsencrypt_venv }}/bin/letsencrypt renew --quiet {{ letsencrypt_renewal_command_args }}"
+      job: "{{letsencrypt_path}} renew --quiet {{ letsencrypt_renewal_command_args }}"
 
   - name: Create directory for `ssl_certificate` and `ssl_certificate_key`
     file:

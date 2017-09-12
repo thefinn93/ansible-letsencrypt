@@ -5,8 +5,14 @@ Currently attempts first to use the `webroot` authenticator, then if that fails 
 it will use the standalone authenticator. This is handy for generating certs on a fresh machine before
 the web server has been configured or even installed.
 
-I've tested this on a couple of Debian Jessie boxes with nginx, if you test it on other things please let me know
-the results (positive or otherwise) so I can document them here/fix the issue.
+# Supported platforms
+- Debian Jessie
+- Debian Stretch
+
+On other platforms this role will try to install letsencrypt using pip, which is not officially supported and may break over upgrades at least.
+
+If you test it on other platforms please let me know the results (positive or
+otherwise) so I can document them here and/or fix the issue.
 
 Requires Ansible >= 2.0
 
