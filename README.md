@@ -9,8 +9,10 @@ the web server has been configured or even installed.
 - Debian Jessie
 - Debian Stretch
 
-If you test it on other things please let me know the results (positive or
-otherwise) so I can document them here/fix the issue.
+On other platforms this role will try to install letsencrypt using pip, which is not officially supported and may break over upgrades at least.
+
+If you test it on other platforms please let me know the results (positive or
+otherwise) so I can document them here and/or fix the issue.
 
 Requires Ansible >= 2.0
 

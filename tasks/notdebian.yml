@@ -1,4 +1,7 @@
 ---
+- name: Warn about using pip
+  debug: msg="Warning: installing letsencrypt using pip is not officially supported and may break with upgrades."
+
 - name: Install depends
   package: name={{ item }} state=present
   become: yes
