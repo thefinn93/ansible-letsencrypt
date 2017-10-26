@@ -28,6 +28,21 @@
     when: ansible_distribution != "Debian"
     tags: install
 
-  - name: generate certificate
+  - name: generate certificate (single)
     include: cert.yml
+    vars:
+      letsencrypt_cert:
+        domains: "{{ letsencrypt_cert_domains }}"
+        webroot: "{{ letsencrypt_webroot_path }}"
+        ssl_certificate: "{{ ssl_certificate | default('') }}"
+        ssl_certificate_key: "{{ ssl_certificate_key | default('') }}"
+    when: letsencrypt_cert_domains and letsencrypt_webroot_path
+    tags: configure
+
+  - name: generate certificate (multiple)
+    include: cert.yml
+    with_items: "{{ letsencrypt_certs }}"
+    loop_control:
+      loop_var: letsencrypt_cert
+    when: letsencrypt_certs
     tags: configure

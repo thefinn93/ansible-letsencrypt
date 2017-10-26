@@ -1,9 +1,14 @@
 ---
   letsencrypt_src_directory: /usr/local/share/letsencrypt
   letsencrypt_venv: "{{ letsencrypt_src_directory }}/env"
-  letsencrypt_cert_domains:
-    - "{{ ansible_fqdn }}"
-  letsencrypt_webroot_path: /var/www
+  letsencrypt_cert_domains: # legacy
+  letsencrypt_webroot_path: # legacy
+  letsencrypt_certs:
+    - webroot: /var/www
+      domains:
+        - "{{ ansible_fqdn }}"
+      ssl_certificate:
+      ssl_certificate_key:
   letsencrypt_authenticator: webroot
   letsencrypt_email: "webmaster@{{ ansible_domain }}"
   letsencrypt_path: "{{ letsencrypt_venv }}/bin/letsencrypt"

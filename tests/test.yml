@@ -5,8 +5,10 @@
 
   vars:
     letsencrypt_email: admin@example.com
-    letsencrypt_cert_domains:
-      - www.example.com
+    letsencrypt_certs:
+      webroot: /var/www
+      domains:
+        - www.example.com
     letsencrypt_server: https://acme-staging.api.letsencrypt.org/directory
 
   roles:
