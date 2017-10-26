@@ -1,13 +1,17 @@
 ---
   letsencrypt_src_directory: /usr/local/share/letsencrypt
   letsencrypt_venv: "{{ letsencrypt_src_directory }}/env"
-  letsencrypt_cert_domains:
-    - "{{ ansible_fqdn }}"
+  letsencrypt_cert_domains: # legacy
   letsencrypt_webroot_path: /var/www
+  letsencrypt_certs:
+    - webroot: /var/www
+      domains:
+        - "{{ ansible_fqdn }}"
+      ssl_certificate:
+      ssl_certificate_key:
   letsencrypt_authenticator: webroot
   letsencrypt_email: "webmaster@{{ ansible_domain }}"
   letsencrypt_path: "{{ letsencrypt_venv }}/bin/letsencrypt"
-  letsencrypt_command: "{{ letsencrypt_path }} -n --agree-tos  {% if letsencrypt_rsa_key_size is defined %}--rsa-key-size {{ letsencrypt_rsa_key_size }}{% endif %} --text {% for domain in letsencrypt_cert_domains %}-d {{ domain }} {% endfor %}{% if letsencrypt_no_email is defined %}--register-unsafely-without-email{% else %}--email {{ letsencrypt_email }}{% endif %} {% if letsencrypt_server is defined %}--server {{ letsencrypt_server }}{% endif %} --expand"
   letsencrypt_renewal_frequency:
     day: "*"
     hour: 0
