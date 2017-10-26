@@ -12,3 +12,4 @@
 - name: change the path to letsencrypt
   set_fact:
     letsencrypt_path: "/usr/bin/letsencrypt"
+  tags: configure
