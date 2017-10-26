@@ -1,16 +1,16 @@
 ---
-- name: Define letsencrypt_command
+- name: "{{ letsencrypt_cert.domains[0] }} : Define letsencrypt_command"
   set_fact:
     letsencrypt_command: "{{ letsencrypt_path }} -n --agree-tos  {% if letsencrypt_rsa_key_size is defined %}--rsa-key-size {{ letsencrypt_rsa_key_size }}{% endif %} --text {% for domain in letsencrypt_cert.domains %}-d {{ domain }} {% endfor %}{% if letsencrypt_no_email is defined %}--register-unsafely-without-email{% else %}--email {{ letsencrypt_email }}{% endif %} {% if letsencrypt_server is defined %}--server {{ letsencrypt_server }}{% endif %} --expand"
 
-- name: Ensure webroot exists
+- name: "{{ letsencrypt_cert.domains[0] }} : Ensure webroot exists"
   file:
     path: "{{ letsencrypt_cert.webroot }}"
     state: directory
     follow: yes
   become: yes
 
-- name: Attempt to get the certificate using the webroot authenticator
+- name: "{{ letsencrypt_cert.domains[0] }} : Attempt to get the certificate using the webroot authenticator"
   command: "{{ letsencrypt_command }} -a webroot --webroot-path {{ letsencrypt_cert.webroot }} certonly"
   become: yes
   args:
@@ -18,13 +18,13 @@
   when: letsencrypt_authenticator == "webroot"
   ignore_errors: True
 
-- name: Attempt to get the certificate using the standalone authenticator (in case eg the webserver isn't running yet)
+- name: "{{ letsencrypt_cert.domains[0] }} : Attempt to get the certificate using the standalone authenticator (in case eg the webserver isn't running yet)"
   command: "{{ letsencrypt_command }} -a standalone auth {{ letsencrypt_standalone_command_args }}"
   become: yes
   args:
     creates: "/etc/letsencrypt/live/{{ letsencrypt_cert.domains[0] }}"
 
-- name: Fix the renewal file
+- name: "{{ letsencrypt_cert.domains[0] }} : Fix the renewal file"
   ini_file:
     section: renewalparams
     option: "{{ item.key }}"
@@ -39,7 +39,7 @@
     hsts: False
     authenticator: '{{ letsencrypt_authenticator }}'
 
-- name: Fix the webroot map in the renewal file
+- name: "{{ letsencrypt_cert.domains[0] }} : Fix the webroot map in the renewal file"
   ini_file:
     section: "[webroot_map]"
     option: "{{ item }}"
@@ -48,7 +48,7 @@
   become: yes
   with_items: "{{ letsencrypt_cert.domains }}"
 
-- name: Install renewal cron
+- name: "{{ letsencrypt_cert.domains[0] }} : Install renewal cron"
   become: yes
   cron:
     name: "Let's Encrypt Renewal"
@@ -57,7 +57,7 @@
     minute: "{{ letsencrypt_renewal_frequency.minute }}"
     job: "{{letsencrypt_path}} renew --quiet {{ letsencrypt_renewal_command_args }}"
 
-- name: Create directory for `ssl_certificate` and `ssl_certificate_key`
+- name: "{{ letsencrypt_cert.domains[0] }} : Create directory for `ssl_certificate` and `ssl_certificate_key`"
   file:
     path: '{{ item }}'
     state: directory
@@ -67,7 +67,7 @@
     - "{{ letsencrypt_cert.ssl_certificate|dirname }}"
     - "{{ letsencrypt_cert.ssl_certificate_key|dirname }}"
 
-- name: Symlink certificates to `ssl_certificate` and `ssl_certificate_key`
+- name: "{{ letsencrypt_cert.domains[0] }} : Symlink certificates to `ssl_certificate` and `ssl_certificate_key`"
   file:
     src: '{{ item.src }}'
     dest: '{{ item.dest }}'
