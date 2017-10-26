@@ -21,6 +21,8 @@ First, read Let's Encrypt's TOS and EULA. Only proceed if you agree to them.
 
 The following variables are available:
 
+`letsencrypt_webroot_path` is the default root path that gets served by your web server. Defaults to `/var/www`.
+
 `letsencrypt_certs` array of dicts with keys `domains` (array), `webroot` (string), `ssl_certificate` (string), `ssl_certificate_key` (string), one item matches one certificate.
 
 `letsencrypt_email` needs to be set to your email address. Let's Encrypt wants it. Defaults to `webmaster@{{ ansible_fqdn }}`. If you _really_ want to register without providing an email address, define the variabe `letsencrypt_no_email`.
@@ -37,8 +39,6 @@ The following variables are available:
 
 Legacy variables for generate single certificate:
 
-`letsencrypt_webroot_path` is the root path that gets served by your web server. Defaults to `/var/www`.
-
 `letsencrypt_cert_domains` is a list of domains you wish to get a certificate for. It defaults to a single item with the value of `{{ ansible_fqdn }}`.
 
 `ssl_certificate` and `ssl_certificate_key` symlinks the certificates to provided path if both are set.
@@ -53,8 +53,7 @@ The [Let's Encrypt client](https://github.com/letsencrypt/letsencrypt) will put 
    roles:
      - role: letsencrypt
        letsencrypt_certs:
-         - webroot: /var/www/html
-           domains:
+         - domains:
              - www.example.net
              - example.net
            ssl_certificate: /path/to/symlink/fullchain.pem

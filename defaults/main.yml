@@ -2,7 +2,7 @@
   letsencrypt_src_directory: /usr/local/share/letsencrypt
   letsencrypt_venv: "{{ letsencrypt_src_directory }}/env"
   letsencrypt_cert_domains: # legacy
-  letsencrypt_webroot_path: # legacy
+  letsencrypt_webroot_path: /var/www
   letsencrypt_certs:
     - webroot: /var/www
       domains:

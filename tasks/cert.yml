@@ -3,15 +3,19 @@
   set_fact:
     letsencrypt_command: "{{ letsencrypt_path }} -n --agree-tos  {% if letsencrypt_rsa_key_size is defined %}--rsa-key-size {{ letsencrypt_rsa_key_size }}{% endif %} --text {% for domain in letsencrypt_cert.domains %}-d {{ domain }} {% endfor %}{% if letsencrypt_no_email is defined %}--register-unsafely-without-email{% else %}--email {{ letsencrypt_email }}{% endif %} {% if letsencrypt_server is defined %}--server {{ letsencrypt_server }}{% endif %} --expand"
 
-- name: "{{ letsencrypt_cert.domains[0] }} : Ensure webroot exists"
+- name: "{{ letsencrypt_cert.domains[0] }} : Define webroot"
+  set_fact:
+    webroot: "{% if letsencrypt_cert.webroot is defined %}{{ letsencrypt_cert.webroot }}{% else %}{{ letsencrypt_webroot_path }}{% endif %}"
+
+- name: "{{ letsencrypt_cert.domains[0] }} : Ensure webroot {{ webroot }} exists"
   file:
-    path: "{{ letsencrypt_cert.webroot }}"
+    path: "{{ webroot }}"
     state: directory
     follow: yes
   become: yes
 
 - name: "{{ letsencrypt_cert.domains[0] }} : Attempt to get the certificate using the webroot authenticator"
-  command: "{{ letsencrypt_command }} -a webroot --webroot-path {{ letsencrypt_cert.webroot }} certonly"
+  command: "{{ letsencrypt_command }} -a webroot --webroot-path {{ webroot }} certonly"
   become: yes
   args:
     creates: "/etc/letsencrypt/live/{{ letsencrypt_cert.domains[0] }}"
@@ -43,7 +47,7 @@
   ini_file:
     section: "[webroot_map]"
     option: "{{ item }}"
-    value: "{{ letsencrypt_cert.webroot }}"
+    value: "{{ webroot }}"
     dest: "/etc/letsencrypt/renewal/{{ letsencrypt_cert.domains[0] }}.conf"
   become: yes
   with_items: "{{ letsencrypt_cert.domains }}"
