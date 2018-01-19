@@ -1,0 +1,19 @@
+---
+- name: update the apt cache
+  apt: update_cache=yes cache_valid_time=7200
+  become: yes
+
+- name: add certbot apt ppa repository
+  apt_repository:
+    repo: "ppa:certbot/certbot"
+  become: yes
+
+- name: install certbot ubuntu
+  apt: pkg={{item}} state=latest
+  with_items:
+    - certbot
+  become: yes
+
+- name: change the path to letsencrypt
+  set_fact:
+    letsencrypt_path: "/usr/bin/letsencrypt"
