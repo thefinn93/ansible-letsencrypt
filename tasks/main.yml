@@ -17,9 +17,9 @@
     include: debian-jessie.yml
     when: ansible_distribution == "Debian" and ansible_distribution_release == "jessie"
 
-  - name: install certbot (Debian stretch or buster)
-    include: debian-stretch-buster.yml
-    when: ansible_distribution == "Debian" and (ansible_distribution_release == "stretch" or ansible_distribution_release == "buster")
+  - name: install certbot (Debian stretch or higher)
+    include: debian-not-jessie.yml
+    when: ansible_distribution == "Debian" and ansible_distribution_release != "jessie"
 
   - name: install certbot (Ubuntu Xenial)
     include: ubuntu-xenial.yml
