@@ -11,6 +11,8 @@ galaxy_info:
       versions:
         - trusty
         - xenial
+        - focal
+        - jammy
     - name: Debian
       versions:
         - jessie

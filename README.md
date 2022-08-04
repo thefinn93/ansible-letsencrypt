@@ -10,6 +10,8 @@ the web server has been configured or even installed.
 - Debian Stretch
 - Debian Buster
 - Ubuntu Xenial
+- Ubuntu Focal
+- Ubuntu Jammy
 
 On other platforms this role will try to install letsencrypt using pip, which is not officially supported and may break over upgrades at least.
 
