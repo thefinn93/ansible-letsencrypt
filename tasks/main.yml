@@ -29,9 +29,13 @@
     include: ubuntu-focal.yml
     when: ansible_distribution == "Ubuntu" and ansible_distribution_release == "focal"
 
+  - name: install certbot (Ubuntu Jammy)
+    include: ubuntu-jammy.yml
+    when: ansible_distribution == "Ubuntu" and ansible_distribution_release == "jammy"
+
   - name: install certbot (using pip)
     include: install-with-pip.yml
-    when: ansible_distribution != "Debian" and (ansible_distribution != "Ubuntu" or ansible_distribution_release not in  ["xenial", "focal"])
+    when: ansible_distribution != "Debian" and (ansible_distribution != "Ubuntu" or ansible_distribution_release not in  ["xenial", "focal", "jammy"])
 
   - name: Ensure webroot exists
     file:
